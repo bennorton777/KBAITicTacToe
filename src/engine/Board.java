@@ -138,7 +138,6 @@ public class Board {
                 }
             }
         }
-        System.out.println("opposing diagonal has " + opposingDiagonal.size() + " elements.");
         diagonals.add(equalDiagonal);
         diagonals.add(opposingDiagonal);
         return diagonals;
