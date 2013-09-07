@@ -8,6 +8,7 @@ import engine.Board;
  */
 public abstract class Agent {
     private String _symbol;
+    private String _opSymbol;
 
     public abstract String getAgentType();
 
@@ -26,6 +27,16 @@ public abstract class Agent {
     public void setSymbol(String symbol) {
         _symbol = symbol;
     }
+
+    public String getOpSymbol() {
+        return _opSymbol;
+    }
+
+    public void setOpSymbol(String opSymbol) {
+        _opSymbol = opSymbol;
+    }
+
+
 
 
 }

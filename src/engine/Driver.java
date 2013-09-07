@@ -26,7 +26,9 @@ public class Driver {
         Agent agent2 = getAgentFromId(agent2id);
 
         agent1.setSymbol("X");
+        agent1.setOpSymbol("O");
         agent2.setSymbol("O");
+        agent2.setOpSymbol("X");
 
         System.out.println(board);
 

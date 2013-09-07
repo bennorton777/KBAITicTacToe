@@ -163,4 +163,13 @@ public class Board {
         sb.append("\n");
         return sb.toString();
     }
+    public String[] getPlaces() {
+        return _places;
+    }
+
+    public void setPlaces(String[] places) {
+        _places = places;
+    }
+
+
 }
