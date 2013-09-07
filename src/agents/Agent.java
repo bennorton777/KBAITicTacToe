@@ -9,6 +9,8 @@ import engine.Board;
 public abstract class Agent {
     private String _symbol;
 
+    public abstract String getAgentType();
+
     public void takeTurn(Board board) {
         chooseRandomSpace(board);
     }
