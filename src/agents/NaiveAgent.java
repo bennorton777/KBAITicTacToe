@@ -1,7 +1,9 @@
 package agents;
 
 import engine.Board;
+import engine.State;
 
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -19,22 +21,28 @@ public class NaiveAgent extends Agent{
         return agentType;
     }
 
-    public void takeTurn(Board board) {
-        //Don't block the opponent
-        for (int i = 0; i < board.getPlaces().length; i++) {
-            if (board.isOpen(i)) {
-                board.putSymbolAtIndex(i, getOpSymbol());
-                if (!board.checkForWins() && rand.nextBoolean()) {
-                    board.removeSymbolAtIndex(i);
-                    board.putSymbolAtIndex(i, getSymbol());
-                    return;
-                }
-                else {
-                    board.removeSymbolAtIndex(i);
-                }
+    public State takeTurn(Board board) {
+        List<State> suc = board.getState().getSuccessors(this);
+        for (State state : suc) {
+            if (board.checkForWins(state) && rand.nextBoolean()) {
+                // 50% chance to choose a winning move
+                addTrace(board, state, 0.0);
+                return state;
             }
         }
-        //pick randomly
-        board.putSymbolRandom(getSymbol());
+        // Choose a random next move as a fallback.\
+        State retVal = suc.get(rand.nextInt(suc.size()));
+        addTrace(board, retVal, 0.0);
+        return retVal;
+    }
+
+
+    private void addTrace(Board board, State state, double score) {
+        if (board.checkForWins(state)) {
+            getTrace().add("I chose this state because it is a winning move.");
+        }
+        else {
+            getTrace().add("There was no clear winning move, so I chose a random legal move.");
+        }
     }
 }

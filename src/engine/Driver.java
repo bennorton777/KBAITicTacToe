@@ -1,11 +1,10 @@
 package engine;
 
 import agents.Agent;
-import agents.ManualAgent;
 import agents.NaiveAgent;
 import agents.ThoughtfulAgent;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -30,9 +29,9 @@ public class Driver {
         Agent agent2 = getAgentFromId(agent2id);
 
         agent1.setSymbol("X");
-        agent1.setOpSymbol("O");
+        agent1.setOpponent(agent2);
         agent2.setSymbol("O");
-        agent2.setOpSymbol("X");
+        agent2.setOpponent(agent1);
 
         System.out.println(board);
 
@@ -42,35 +41,41 @@ public class Driver {
         int numDraws = 0;
         while (gamesPlayed < numGames) {
             System.out.println("Agent " + agent1.getSymbol() + " takes a turn.");
-            agent1.takeTurn(board);
+            board.setState(agent1.takeTurn(board));
             System.out.println(board);
-            if (board.checkForWins()) {
+            if (board.checkForWins(board.getState())) {
                 System.out.println("\n" + agent1.getAgentType() + " has won!");
                 agent1Won++;
                 gamesPlayed++;
                 board = new Board();
+                traces(agent1, agent2);
                 continue;
             }
-            if (board.isDraw()) {
+            if (board.getState().isDraw()) {
                 System.out.println("\nThis game is a draw!");
                 gamesPlayed++;
                 numDraws++;
+                board = new Board();
+                traces(agent1, agent2);
                 continue;
             }
             System.out.println("Agent " + agent2.getSymbol() + " takes a turn.");
-            agent2.takeTurn(board);
+            board.setState(agent2.takeTurn(board));
             System.out.println(board);
-            if (board.checkForWins()) {
+            if (board.checkForWins(board.getState())) {
                 System.out.println("\n" + agent2.getAgentType() + " has won!");
+                traces(agent1, agent2);
                 agent2Won++;
                 gamesPlayed++;
                 board = new Board();
                 continue;
             }
-            if (board.isDraw()) {
+            if (board.getState().isDraw()) {
                 System.out.println("\nThis game is a draw!");
+                traces(agent1, agent2);
                 gamesPlayed++;
                 numDraws++;
+                board = new Board();
                 continue;
             }
         }
@@ -79,10 +84,9 @@ public class Driver {
     }
 
     private static int getAgentId(Scanner scan, String symbol) {
-        System.out.println("Select 1, 2, or 3 to be the agent for the " + symbol + " team!");
-        System.out.println("1: Manual Agent (Human plays!)");
-        System.out.println("2: Naive Agent");
-        System.out.println("3: Thoughtful Agent");
+        System.out.println("Select 1 or 2 to be the agent for the " + symbol + " team!");
+        System.out.println("1: Naive Agent");
+        System.out.println("2: Thoughtful Agent");
         System.out.println("For the " + symbol + " team, I choose agent number: ");
         int id = scan.nextInt();
         System.out.println();
@@ -92,12 +96,18 @@ public class Driver {
     private static Agent getAgentFromId(int agentId) {
         switch (agentId) {
             case 1:
-                return new ManualAgent();
-            case 2:
                 return new NaiveAgent();
-            case 3:
+            case 2:
                 return new ThoughtfulAgent();
         }
         return null;
+    }
+    public static void traces(Agent agent1, Agent agent2) {
+        System.out.println("Agent 1 ("+agent1.getAgentType()+") maintains the following trace of why he chose the actions he did:");
+        agent1.printTrace();
+        System.out.println("Agent 2 ("+agent2.getAgentType()+") maintains the following trace of why he chose the actions he did:");
+        agent2.printTrace();
+        agent1.setTrace(new ArrayList<String>());
+        agent2.setTrace(new ArrayList<String>());
     }
 }
