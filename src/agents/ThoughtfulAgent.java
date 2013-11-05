@@ -45,7 +45,8 @@ public class ThoughtfulAgent extends Agent {
                 bestChoice = state;
             }
         }
-        addTrace(board, bestChoice, currentScore);
+        addTrace(board, bestChoice,currentScore);
+        getMoveList().add(bestChoice.progressFrom(board.getState()));
         return bestChoice;
     }
 

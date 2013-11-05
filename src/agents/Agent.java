@@ -16,9 +16,13 @@ public abstract class Agent {
     private Agent opponent;
     private static final Random random = new Random();
     private List<String> trace;
+    private List<String> moveList;
+    String whatMove;
+    String whyMove;
 
     public Agent() {
         trace = new ArrayList<String>();
+        moveList = new ArrayList<String>();
     }
     public void printTrace() {
         for (String s : trace) {
@@ -79,7 +83,18 @@ public abstract class Agent {
         return trace;
     }
 
+    public List<String> getMoveList() {
+        return moveList;
+    }
+
     public void setTrace(List<String> trace) {
         this.trace = trace;
+    }
+    public String identifyMove(int turn){
+        return getMoveList().get(--turn);
+    }
+
+    public String justifyMove(int turn) {
+        return getTrace().get(--turn);
     }
 }

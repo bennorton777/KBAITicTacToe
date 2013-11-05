@@ -13,12 +13,18 @@ import java.util.Scanner;
  */
 public class Driver {
     public static void main(String[] args) {
+
+        QuestionBase.init();
+
         Scanner scan = new Scanner(System.in);
         Board board = new Board();
 
-        System.out.println("Welcome to TicTacToe!  How many games would you like to see played? ");
+        System.out.print("Welcome to TicTacToe!  How many games would you like to see played? ");
         int numGames = scan.nextInt();
         System.out.println();
+
+        System.out.print("Okay, " + numGames + " games.\n\nWould you like to pause the program after each game to ask the agents questions? (input 1 for yes, and 2 for no): ");
+        boolean pause =scan.nextInt() == 1;
 
         // Select Agents
         int agent1id, agent2id;
@@ -47,6 +53,9 @@ public class Driver {
                 System.out.println("\n" + agent1.getAgentType() + " has won!");
                 agent1Won++;
                 gamesPlayed++;
+                if (pause) {
+                    Driver.pause(agent1, agent2, scan);
+                }
                 board = new Board();
                 traces(agent1, agent2);
                 continue;
@@ -55,6 +64,9 @@ public class Driver {
                 System.out.println("\nThis game is a draw!");
                 gamesPlayed++;
                 numDraws++;
+                if (pause) {
+                    Driver.pause(agent1, agent2, scan);
+                }
                 board = new Board();
                 traces(agent1, agent2);
                 continue;
@@ -67,6 +79,9 @@ public class Driver {
                 traces(agent1, agent2);
                 agent2Won++;
                 gamesPlayed++;
+                if (pause) {
+                    Driver.pause(agent1, agent2, scan);
+                }
                 board = new Board();
                 continue;
             }
@@ -75,6 +90,9 @@ public class Driver {
                 traces(agent1, agent2);
                 gamesPlayed++;
                 numDraws++;
+                if (pause) {
+                    Driver.pause(agent1, agent2, scan);
+                }
                 board = new Board();
                 continue;
             }
@@ -87,10 +105,43 @@ public class Driver {
         System.out.println("Select 1 or 2 to be the agent for the " + symbol + " team!");
         System.out.println("1: Naive Agent");
         System.out.println("2: Thoughtful Agent");
-        System.out.println("For the " + symbol + " team, I choose agent number: ");
+        System.out.print("For the " + symbol + " team, I choose agent number: ");
         int id = scan.nextInt();
         System.out.println();
         return id;
+    }
+
+    private static boolean pause(Agent agent1, Agent agent2, Scanner scan) {
+        System.out.print("Would you like to ask a question about the game? (input 1 for yes, and 2 for no): ");
+
+        boolean cont =scan.nextInt() == 1;
+        if (!cont) {
+            return false;
+        }
+
+        System.out.print("Which turn would you like to ask questions about? ");
+        int turn = scan.nextInt();
+        System.out.println();
+
+        System.out.print("Which agent would you like to interrogate?\n1: "+agent1.getAgentType()+"\n2: " + agent2.getAgentType() + "\nEnter your selection: ");
+        int agentIndex = scan.nextInt();
+        System.out.println();
+
+        System.out.println("Select your question:\n");
+
+        StringBuilder sb = new StringBuilder();
+        int count = 0;
+        for (Questions question  : Questions.values()) {
+            sb.append(++count).append(": ").append(question.identify()).append("\n");
+        }
+        System.out.println(sb.toString());
+
+        int question = scan.nextInt();
+        System.out.println("You asked question: "+question);
+
+        //TODO Ask agents questions
+
+        return true;
     }
 
     private static Agent getAgentFromId(int agentId) {

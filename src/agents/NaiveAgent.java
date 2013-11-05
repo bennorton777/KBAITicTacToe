@@ -33,6 +33,7 @@ public class NaiveAgent extends Agent{
         // Choose a random next move as a fallback.\
         State retVal = suc.get(rand.nextInt(suc.size()));
         addTrace(board, retVal, 0.0);
+        getMoveList().add(retVal.progressFrom(board.getState()));
         return retVal;
     }
 

@@ -99,6 +99,16 @@ public class State {
         diagonals.add(opposingDiagonal);
         return diagonals;
     }
+    public String progressFrom(State original){
+        int differIndex;
+        for (differIndex = 0; differIndex < this._places.length; differIndex++) {
+            if ( ! _places[differIndex].equals(original._places[differIndex]) ) {
+                break;
+            }
+        }
+
+        return "I put an "+_places[differIndex]+" at "+differIndex/width+","+differIndex%width+".";
+    }
 
     public int getHeight() {
         return height;
