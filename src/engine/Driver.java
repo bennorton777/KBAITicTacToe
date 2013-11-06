@@ -51,22 +51,22 @@ public class Driver {
             System.out.println(board);
             if (board.checkForWins(board.getState())) {
                 System.out.println("\n" + agent1.getAgentType() + " has won!");
-                agent1Won++;
-                gamesPlayed++;
                 if (pause) {
                     Driver.pause(agent1, agent2, scan);
                 }
+                agent1Won++;
+                gamesPlayed++;
                 board = new Board();
                 traces(agent1, agent2);
                 continue;
             }
             if (board.getState().isDraw()) {
                 System.out.println("\nThis game is a draw!");
-                gamesPlayed++;
-                numDraws++;
                 if (pause) {
                     Driver.pause(agent1, agent2, scan);
                 }
+                gamesPlayed++;
+                numDraws++;
                 board = new Board();
                 traces(agent1, agent2);
                 continue;
@@ -76,23 +76,23 @@ public class Driver {
             System.out.println(board);
             if (board.checkForWins(board.getState())) {
                 System.out.println("\n" + agent2.getAgentType() + " has won!");
-                traces(agent1, agent2);
-                agent2Won++;
-                gamesPlayed++;
                 if (pause) {
                     Driver.pause(agent1, agent2, scan);
                 }
+                agent2Won++;
+                gamesPlayed++;
+                traces(agent1, agent2);
                 board = new Board();
                 continue;
             }
             if (board.getState().isDraw()) {
                 System.out.println("\nThis game is a draw!");
-                traces(agent1, agent2);
-                gamesPlayed++;
-                numDraws++;
                 if (pause) {
                     Driver.pause(agent1, agent2, scan);
                 }
+                traces(agent1, agent2);
+                gamesPlayed++;
+                numDraws++;
                 board = new Board();
                 continue;
             }
@@ -124,7 +124,7 @@ public class Driver {
         System.out.println();
 
         System.out.print("Which agent would you like to interrogate?\n1: "+agent1.getAgentType()+"\n2: " + agent2.getAgentType() + "\nEnter your selection: ");
-        int agentIndex = scan.nextInt();
+        Agent currentAgent = scan.nextInt() == 1 ? agent1 : agent2;
         System.out.println();
 
         System.out.println("Select your question:\n");
@@ -137,9 +137,9 @@ public class Driver {
         System.out.println(sb.toString());
 
         int question = scan.nextInt();
-        System.out.println("You asked question: "+question);
+        System.out.println(Questions.values()[--question].ask(currentAgent,turn));
 
-        //TODO Ask agents questions
+        pause(agent1, agent2, scan);
 
         return true;
     }

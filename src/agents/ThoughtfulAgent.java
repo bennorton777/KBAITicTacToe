@@ -3,6 +3,7 @@ package agents;
 import engine.Board;
 import engine.State;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,7 +15,12 @@ import java.util.Map;
 public class ThoughtfulAgent extends Agent {
 
     private final String agentType = "Thoughtful Agent";
+    private List<Boolean> wasWinning;
 
+
+    public ThoughtfulAgent() {
+        wasWinning = new ArrayList<Boolean>();
+    }
 
     public String getAgentType() {
         return agentType;
@@ -42,15 +48,19 @@ public class ThoughtfulAgent extends Agent {
         for (State state : viability.keySet()) {
             if (viability.get(state) > currentScore ) {
                 currentScore = viability.get(state);
+                if (currentScore > 0) {
+                    wasWinning.add(true);
+                }
+                else wasWinning.add(false);
                 bestChoice = state;
             }
         }
         addTrace(board, bestChoice,currentScore);
-        getMoveList().add(bestChoice.progressFrom(board.getState()));
         return bestChoice;
     }
 
     private void addTrace(Board board, State state, double score) {
+        getMoveList().add(state.progressFrom(board.getState()));
         if (board.checkForWins(state)) {
             getTrace().add("I chose this state because it is a winning move.");
         }
@@ -60,5 +70,12 @@ public class ThoughtfulAgent extends Agent {
         else {
             getTrace().add("There was no clear win, lose, or draw move at this point, so I chose the best projected outcome based on recursively scoring all of the states.  This state had a score of " + score + " which made it the best option.");
         }
+    }
+
+    public String isWinning(int turn) {
+        if (wasWinning.get(--turn)) {
+            return "I am!  :)\n";
+        }
+        else return "I am not.  :(\n";
     }
 }

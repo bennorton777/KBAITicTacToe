@@ -97,4 +97,8 @@ public abstract class Agent {
     public String justifyMove(int turn) {
         return getTrace().get(--turn);
     }
+
+    public String isWinning(int turn) {
+        return "I don't have a way of gauging that -- I don't know!";
+    }
 }
