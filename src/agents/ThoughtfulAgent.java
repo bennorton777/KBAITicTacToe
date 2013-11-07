@@ -63,12 +63,15 @@ public class ThoughtfulAgent extends Agent {
         getMoveList().add(state.progressFrom(board.getState()));
         if (board.checkForWins(state)) {
             getTrace().add("I chose this state because it is a winning move.");
+            getStrategyList().add("I chose this state because it is a winning move.");
         }
         else if (state.isDraw()) {
             getTrace().add("I chose this state because a draw is preferable to losing.");
+            getStrategyList().add("I chose this state because a draw is preferable to losing.");
         }
         else {
             getTrace().add("There was no clear win, lose, or draw move at this point, so I chose the best projected outcome based on recursively scoring all of the states.  This state had a score of " + score + " which made it the best option.");
+            getStrategyList().add("There was no clear win, lose, or draw move at this point, and I know that in this scenario, I should choose the move that makes it least likely for my opponent to win if all moves are equally likely, and makes it the most likely for me to win if all moves are equally likely.");
         }
     }
 

@@ -154,11 +154,15 @@ public class Driver {
         return null;
     }
     public static void traces(Agent agent1, Agent agent2) {
-        System.out.println("Agent 1 ("+agent1.getAgentType()+") maintains the following trace of why he chose the actions he did:");
-        agent1.printTrace();
-        System.out.println("Agent 2 ("+agent2.getAgentType()+") maintains the following trace of why he chose the actions he did:");
-        agent2.printTrace();
+//        System.out.println("Agent 1 ("+agent1.getAgentType()+") maintains the following trace of why he chose the actions he did:");
+//        agent1.printTrace();
+//        System.out.println("Agent 2 ("+agent2.getAgentType()+") maintains the following trace of why he chose the actions he did:");
+//        agent2.printTrace();
         agent1.setTrace(new ArrayList<String>());
         agent2.setTrace(new ArrayList<String>());
+        agent1.setMoveList(new ArrayList<String>());
+        agent2.setMoveList(new ArrayList<String>());
+        agent1.setStrategyList(new ArrayList<String>());
+        agent2.setStrategyList(new ArrayList<String>());
     }
 }

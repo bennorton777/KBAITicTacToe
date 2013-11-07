@@ -17,12 +17,14 @@ public abstract class Agent {
     private static final Random random = new Random();
     private List<String> trace;
     private List<String> moveList;
+    private List<String> strategyList;
     String whatMove;
     String whyMove;
 
     public Agent() {
         trace = new ArrayList<String>();
         moveList = new ArrayList<String>();
+        strategyList = new ArrayList<String>();
     }
     public void printTrace() {
         for (String s : trace) {
@@ -86,9 +88,18 @@ public abstract class Agent {
     public List<String> getMoveList() {
         return moveList;
     }
+    public List<String> getStrategyList() {
+        return strategyList;
+    }
 
     public void setTrace(List<String> trace) {
         this.trace = trace;
+    }
+    public void setMoveList(List<String> list) {
+        moveList = list;
+    }
+    public void setStrategyList(List<String> list) {
+        strategyList = list;
     }
     public String identifyMove(int turn){
         return getMoveList().get(--turn);
@@ -96,6 +107,10 @@ public abstract class Agent {
 
     public String justifyMove(int turn) {
         return getTrace().get(--turn);
+    }
+
+    public String strategy(int turn) {
+        return getStrategyList().get(--turn);
     }
 
     public String domain() {

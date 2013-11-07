@@ -41,9 +41,11 @@ public class NaiveAgent extends Agent{
     private void addTrace(Board board, State state, double score) {
         if (board.checkForWins(state)) {
             getTrace().add("I chose this state because it is a winning move.");
+            getStrategyList().add("I chose this state because it is a winning move.");
         }
         else {
-            getTrace().add("There was no clear winning move, so I chose a random legal move.");
+            getTrace().add("There was no clear winning move, so I chose a random legal move");
+            getStrategyList().add("There was no clear winning move, and I don't really have any strategy beyond winning if I can do it in one move.  I just picked a random space that was legal according to my domain knowledge.");
         }
     }
 
