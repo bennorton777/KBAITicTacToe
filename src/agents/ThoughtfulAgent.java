@@ -78,4 +78,8 @@ public class ThoughtfulAgent extends Agent {
         }
         else return "I am not.  :(\n";
     }
+
+    public String domain() {
+        return "\nFor this move, I used the following domain knowledge:\n\nMoves consist of placing an " + getSymbol() + " onto a board with a finite number of spaces.\nI win the game by having three " + getSymbol() + "'s in a row.\nI cannot place an " + getSymbol() + " if there is already a " + getOpSymbol() + " in that space.\nI may only place one " + getSymbol() + " per turn.\nIf at any point there are three " + getOpSymbol() + "'s in a row in the game, I lose.\nI should try to make moves that make it unlikely for my opponent to be able to connect three " + getOpSymbol() + "'s in a row in the future.";
+    }
 }

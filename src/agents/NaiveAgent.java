@@ -46,4 +46,10 @@ public class NaiveAgent extends Agent{
             getTrace().add("There was no clear winning move, so I chose a random legal move.");
         }
     }
+
+    public String domain() {
+        return "\nFor this move, I used the following domain knowledge:\n\nMoves consist of placing an " + getSymbol() + " onto a board with a finite number of spaces.\nI win the game by having three " + getSymbol() + "'s in a row.\nI cannot place an " + getSymbol() + " if there is already a " + getOpSymbol() + " in that space.\nI may only place one " + getSymbol() + " per turn.\nIf at any point there are three " + getOpSymbol() + "'s in a row in the game, I lose.";
+    }
+
+    //TODO Naive agent should know if it was winning or not
 }

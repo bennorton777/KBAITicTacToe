@@ -17,6 +17,7 @@ public enum Questions {
             case WHAT: return agent.identifyMove(turn);
             case WHY: return agent.justifyMove(turn);
             case WINNING: return agent.isWinning(turn);
+            case DOMAIN: return agent.domain();
             default: return "Not implemented.";
         }
     }

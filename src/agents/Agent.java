@@ -98,6 +98,10 @@ public abstract class Agent {
         return getTrace().get(--turn);
     }
 
+    public String domain() {
+        return "Not implemented";
+    }
+
     public String isWinning(int turn) {
         return "I don't have a way of gauging that -- I don't know!";
     }
